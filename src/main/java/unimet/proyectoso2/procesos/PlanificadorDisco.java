@@ -1,10 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package unimet.proyectoso2.procesos;
 
 import unimet.proyectoso2.estructuras.LinkedList;
+import unimet.proyectoso2.procesos.PCB;
 
 /**
  * Simula el controlador del disco encargado de ordenar las peticiones de I/O.
@@ -21,7 +19,11 @@ public class PlanificadorDisco {
         this.direccion = direccionInicial;
         this.tamanoDisco = tamanoDisco;
     }
-
+    
+    public LinkedList<PCB> getColaProcesos() {
+    return colaProcesos;
+    }
+    
     public synchronized void agregarProceso(PCB proceso) {
         proceso.setEstado(EstadoProceso.LISTO);
         colaProcesos.add(proceso);
@@ -47,120 +49,109 @@ public class PlanificadorDisco {
     /**
      * 2. SSTF (Shortest Seek Time First)
      */
-    public synchronized LinkedList<PCB> ejecutarSSTF() {
-        LinkedList<PCB> ordenEjecucion = new LinkedList<>();
-        
-        while (!colaProcesos.isEmpty()) {
-            PCB pcbMasCercano = null;
-            int distanciaMinima = Integer.MAX_VALUE;
+   private PCB extraerSSTF() {
+    PCB pcbMasCercano = null;
+    int distanciaMinima = Integer.MAX_VALUE;
 
-            // Búsqueda lineal manual (O(N))
-            for (int i = 0; i < colaProcesos.size(); i++) {
-                PCB actual = colaProcesos.get(i);
-                int distancia = Math.abs(actual.getBloqueObjetivo() - cabezalActual);
-                
-                if (distancia < distanciaMinima) {
-                    distanciaMinima = distancia;
-                    pcbMasCercano = actual;
-                }
-            }
-
-            // Procesar el más cercano
-            colaProcesos.remove(pcbMasCercano);
-            cabezalActual = pcbMasCercano.getBloqueObjetivo();
-            pcbMasCercano.setEstado(EstadoProceso.TERMINADO);
-            ordenEjecucion.add(pcbMasCercano);
+    for (int i = 0; i < colaProcesos.size(); i++) {
+        PCB actual = colaProcesos.get(i);
+        int distancia = Math.abs(actual.getBloqueObjetivo() - cabezalActual);
+        if (distancia < distanciaMinima) {
+            distanciaMinima = distancia;
+            pcbMasCercano = actual;
         }
-        return ordenEjecucion;
     }
+    colaProcesos.remove(pcbMasCercano);
+    cabezalActual = pcbMasCercano.getBloqueObjetivo();
+    return pcbMasCercano;
+}
 
     /**
      * 3. SCAN (Algoritmo del Ascensor)
      */
-    public synchronized LinkedList<PCB> ejecutarSCAN() {
-        LinkedList<PCB> ordenEjecucion = new LinkedList<>();
-        
-        while (!colaProcesos.isEmpty()) {
-            PCB pcbSiguiente = null;
-            int distanciaMinima = Integer.MAX_VALUE;
+    private PCB extraerSCAN() {
+    PCB seleccionado = null;
+    int minDistancia = Integer.MAX_VALUE;
 
-            // Buscar en la dirección actual
-            for (int i = 0; i < colaProcesos.size(); i++) {
-                PCB actual = colaProcesos.get(i);
-                int diff = actual.getBloqueObjetivo() - cabezalActual;
-                
-                // Si va hacia arriba (1), ignoramos los negativos. Si va abajo (-1), ignoramos los positivos
-                if ((direccion == 1 && diff >= 0) || (direccion == -1 && diff <= 0)) {
-                    int distAbs = Math.abs(diff);
-                    if (distAbs < distanciaMinima) {
-                        distanciaMinima = distAbs;
-                        pcbSiguiente = actual;
-                    }
-                }
-            }
+    for (int i = 0; i < colaProcesos.size(); i++) {
+        PCB pcb = colaProcesos.get(i);
+        int diff = pcb.getBloqueObjetivo() - cabezalActual;
 
-            if (pcbSiguiente != null) {
-                colaProcesos.remove(pcbSiguiente);
-                cabezalActual = pcbSiguiente.getBloqueObjetivo();
-                pcbSiguiente.setEstado(EstadoProceso.TERMINADO);
-                ordenEjecucion.add(pcbSiguiente);
-            } else {
-                // No hay más peticiones en esta dirección. Llegamos al extremo y rebotamos.
-                if (direccion == 1) {
-                    cabezalActual = tamanoDisco - 1;
-                } else {
-                    cabezalActual = 0;
-                }
-                direccion *= -1; // Invertir dirección
+        // ¿Está en la dirección actual? (1 = arriba/derecha, -1 = abajo/izquierda)
+        if ((direccion == 1 && diff >= 0) || (direccion == -1 && diff <= 0)) {
+            int distAbs = Math.abs(diff);
+            if (distAbs < minDistancia) {
+                minDistancia = distAbs;
+                seleccionado = pcb;
             }
         }
-        return ordenEjecucion;
     }
+
+    if (seleccionado == null) {
+        // No hay más peticiones en esta dirección, "rebotamos"
+        direccion *= -1; 
+        return extraerSCAN(); // Buscamos ahora en la nueva dirección
+    }
+
+    colaProcesos.remove(seleccionado);
+    cabezalActual = seleccionado.getBloqueObjetivo();
+    return seleccionado;
+}
 
     /**
      * 4. C-SCAN (Circular SCAN)
      */
-    public synchronized LinkedList<PCB> ejecutarCSCAN() {
-        LinkedList<PCB> ordenEjecucion = new LinkedList<>();
-        
-        // C-SCAN suele trabajar en una sola dirección, asumiremos siempre ASCENDENTE (1)
-        direccion = 1; 
+    private PCB extraerCSCAN() {
+    PCB seleccionado = null;
+    int minDistancia = Integer.MAX_VALUE;
 
-        while (!colaProcesos.isEmpty()) {
-            PCB pcbSiguiente = null;
-            int distanciaMinima = Integer.MAX_VALUE;
+    for (int i = 0; i < colaProcesos.size(); i++) {
+        PCB pcb = colaProcesos.get(i);
+        int diff = pcb.getBloqueObjetivo() - cabezalActual;
 
-            // Buscar peticiones hacia adelante
-            for (int i = 0; i < colaProcesos.size(); i++) {
-                PCB actual = colaProcesos.get(i);
-                int diff = actual.getBloqueObjetivo() - cabezalActual;
-                
-                if (diff >= 0 && diff < distanciaMinima) {
-                    distanciaMinima = diff;
-                    pcbSiguiente = actual;
-                }
-            }
-
-            if (pcbSiguiente != null) {
-                colaProcesos.remove(pcbSiguiente);
-                cabezalActual = pcbSiguiente.getBloqueObjetivo();
-                pcbSiguiente.setEstado(EstadoProceso.TERMINADO);
-                ordenEjecucion.add(pcbSiguiente);
-            } else {
-                // Llegamos al final del disco. Salto abrupto al inicio sin atender peticiones.
-                cabezalActual = 0;
-            }
+        if (diff >= 0 && diff < minDistancia) {
+            minDistancia = diff;
+            seleccionado = pcb;
         }
-        return ordenEjecucion;
+    }
+
+    if (seleccionado == null) {
+        // Si no hay nadie adelante, saltamos al inicio del disco (bloque 0)
+        cabezalActual = 0;
+        return extraerCSCAN(); // Volvemos a buscar desde el inicio
+    }
+
+    colaProcesos.remove(seleccionado);
+    cabezalActual = seleccionado.getBloqueObjetivo();
+    return seleccionado;
+}
+
+// No olvides este getter para que la GUI sepa dónde pintar el cabezal (Rojo)
+    public synchronized int getCabezalActual() {
+    return cabezalActual;
     }
     
-   public synchronized PCB obtenerSiguiente() {
+     public synchronized PCB obtenerSiguiente(String politica) {
     if (colaProcesos.isEmpty()) return null;
 
-    // Por ahora sacamos el primero (FIFO)
-    // En la versión final, aquí puedes poner un switch para elegir entre SSTF, SCAN, etc.
-    PCB siguiente = colaProcesos.get(0);
-    colaProcesos.remove(siguiente);
-    return siguiente;
+    switch (politica) {
+        case "SSTF":
+            return extraerSSTF();
+        case "SCAN":
+            return extraerSCAN();
+        case "C-SCAN":
+            return extraerCSCAN();
+        default: // FIFO
+            PCB pcb = colaProcesos.get(0);
+            colaProcesos.remove(pcb);
+            cabezalActual = pcb.getBloqueObjetivo();
+            return pcb;
+    }
+  }
+
+    public synchronized void setCabezalActual(int nuevaPosicion) {
+    this.cabezalActual = nuevaPosicion;
     }
 }
+    
+  

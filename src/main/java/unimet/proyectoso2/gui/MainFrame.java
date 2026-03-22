@@ -14,6 +14,7 @@ import unimet.proyectoso2.sistema.*;
 import unimet.proyectoso2.procesos.*;
 import unimet.proyectoso2.disco.*;
 import unimet.proyectoso2.concurrencia.*;
+import unimet.proyectoso2.estructuras.*;
 
 public class MainFrame extends JFrame {
 
@@ -58,7 +59,9 @@ public class MainFrame extends JFrame {
         JPanel panelNorte = new JPanel();
         JButton btnCrear = new JButton("Nuevo Archivo");
         JButton btnNuevaCarpeta = new JButton("Nueva Carpeta"); 
-        JButton btnRenombrar = new JButton("Renombrar");       
+        JButton btnRenombrar = new JButton("Renombrar");
+        JButton btnGuardar = new JButton("GUARDAR ESTADO"); // Nuevo botón
+        btnGuardar.setBackground(new Color(200, 255, 200)); // Color verde clarito
         JButton btnEliminar = new JButton("Eliminar Seleccionado");
         JButton btnFallo = new JButton("SIMULAR FALLO (CRASH)");
         JButton btnModo = new JButton("Cambiar Modo Admin/User");
@@ -70,6 +73,7 @@ public class MainFrame extends JFrame {
         panelNorte.add(btnNuevaCarpeta); 
         panelNorte.add(btnRenombrar);    
         panelNorte.add(btnEliminar);
+        panelNorte.add(btnGuardar);
         panelNorte.add(new JLabel(" Política:"));
         panelNorte.add(comboPolitica);
         panelNorte.add(btnFallo);
@@ -108,10 +112,17 @@ public class MainFrame extends JFrame {
 
         // --- EVENTOS ---
         btnCrear.addActionListener(e -> menuCrearArchivo());
+        comboPolitica.addActionListener(e -> {
+        String seleccion = (String) comboPolitica.getSelectedItem();
+        simulador.setPoliticaActual(seleccion);
+        });
         btnNuevaCarpeta.addActionListener(e -> menuCrearCarpeta()); 
         btnRenombrar.addActionListener(e -> menuRenombrar());       
         btnEliminar.addActionListener(e -> ejecutarEliminacion());  
         btnFallo.addActionListener(e -> simularFallo());
+        btnGuardar.addActionListener(e -> {fsManager.guardarEstado();
+        JOptionPane.showMessageDialog(this, "¡Sistema de archivos guardado en JSON!");
+        });
         btnModo.addActionListener(e -> cambiarModo());
     }
 
@@ -130,16 +141,16 @@ public class MainFrame extends JFrame {
         }
     }
 
-    private void iniciarTimerRefresco() {
-        Timer timer = new Timer(500, (ActionEvent e) -> {
-            refrescarColoresDisco();
-            actualizarTablaProcesos();
-            actualizarTablaFAT();
-            actualizarJournalView();
-        });
-        timer.start();
-    }
-
+   private void iniciarTimerRefresco() {
+    // Importante: Asegúrate de importar javax.swing.Timer
+    Timer timer = new Timer(500, (ActionEvent e) -> {
+        refrescarColoresDisco();    // Actualiza el cabezal rojo y bloques cian
+        actualizarTablaProcesos();  // Muestra qué proceso está "Ejecutando"
+        actualizarTablaFAT();       // Muestra los archivos y su bloque inicial
+        actualizarJournalView();    // Muestra los logs en verde
+    });
+    timer.start();
+}
     public void actualizarJTree(Directorio raiz) {
         DefaultMutableTreeNode nodoRaiz = new DefaultMutableTreeNode(raiz.getNombre());
         llenarNodoRecursivo(raiz, nodoRaiz);
@@ -165,23 +176,21 @@ public class MainFrame extends JFrame {
     }
 }
 
-    private void refrescarColoresDisco() {
-        VirtualDisk disco = fsManager.getDisco();
-        for (int i = 0; i < disco.getTotalBlocks(); i++) {
-            if (disco.getBlocks()[i].isFree()) {
-                etiquetasBloques[i].setBackground(Color.WHITE);
-            } else {
-                etiquetasBloques[i].setBackground(Color.CYAN);
-            }
-        }
-    }
-
     private void actualizarTablaProcesos() {
-        DefaultTableModel modelo = (DefaultTableModel) tableProcesos.getModel();
-        modelo.setRowCount(0);
-        // Aquí deberías tener una lista de procesos activos en tu Planificador o FSMgr
-        // Por ahora se deja lista para implementar según tu lista de procesos.
+    DefaultTableModel modelo = (DefaultTableModel) tableProcesos.getModel();
+    modelo.setRowCount(0);
+    
+    LinkedList<PCB> procesos = fsManager.getPlanificador().getColaProcesos();
+    for (int i = 0; i < procesos.size(); i++) {
+        PCB p = procesos.get(i);
+        modelo.addRow(new Object[]{
+            p.getIdProceso(), 
+            p.getOperacion(), 
+            p.getEstado(), 
+            p.getBloqueObjetivo()
+        });
     }
+}
 
     // Este limpia la tabla y lanza la búsqueda desde la raíz
     private void actualizarTablaFAT() {
@@ -193,15 +202,15 @@ public class MainFrame extends JFrame {
 }
 
     // Este busca archivos en carpetas y subcarpetas (Recursividad)
-    private void llenarTablaFATRecursivo(Directorio dirActual, DefaultTableModel modelo) {
-    // 1. Agregar todos los archivos de ESTA carpeta a la tabla
+   private void llenarTablaFATRecursivo(Directorio dirActual, DefaultTableModel modelo) {
+    // 1. Archivos de la carpeta actual
     for (int i = 0; i < dirActual.getArchivos().size(); i++) {
         Archivo a = dirActual.getArchivos().get(i);
         
-        // --- AQUÍ VA LA LÓGICA QUE ME PREGUNTASTE ---
-        // Si el simulador aún no le asigna bloques, mostrar "Asignando..."
-        // Si ya los tiene, mostrar el ID del primer bloque.
-        Object inicio = (a.getBloqueInicial() != null) ? a.getBloqueInicial().getId() : "Asignando...";
+        // Lógica visual: Si aún no tiene bloque, mostramos un mensaje pendiente
+        Object inicio = (a.getBloqueInicial() != null) 
+                        ? a.getBloqueInicial().getId() 
+                        : "Esperando disco..."; // Esto se verá mientras el proceso está en la cola
         
         modelo.addRow(new Object[]{
             a.getNombre(), 
@@ -210,21 +219,11 @@ public class MainFrame extends JFrame {
         });
     }
 
-    // 2. Entrar a las subcarpetas y buscar más archivos
+    // 2. Recursión para subcarpetas
     for (int i = 0; i < dirActual.getSubdirectorios().size(); i++) {
         llenarTablaFATRecursivo(dirActual.getSubdirectorios().get(i), modelo);
     }
 }
-
-    private void agregarArchivosATabla(Directorio dir, DefaultTableModel modelo) {
-        for (int i = 0; i < dir.getArchivos().size(); i++) {
-            Archivo a = dir.getArchivos().get(i);
-            modelo.addRow(new Object[]{a.getNombre(), a.getTamanoEnBloques(), (a.getBloqueInicial() != null ? a.getBloqueInicial().getId() : "N/A")});
-        }
-        for (int i = 0; i < dir.getSubdirectorios().size(); i++) {
-            agregarArchivosATabla(dir.getSubdirectorios().get(i), modelo);
-        }
-    }
 
     private void actualizarJournalView() {
         StringBuilder sb = new StringBuilder();
@@ -431,5 +430,29 @@ public class MainFrame extends JFrame {
         java.awt.EventQueue.invokeLater(() -> {
             new MainFrame().setVisible(true);
         });
+    }
+    
+    private void refrescarColoresDisco() {
+    VirtualDisk disco = fsManager.getDisco();
+    // Obtenemos la posición actual del cabezal desde el planificador
+    int posCabezal = fsManager.getPlanificador().getCabezalActual();
+
+    for (int i = 0; i < disco.getTotalBlocks(); i++) {
+        // 1. Si es la posición del cabezal, lo pintamos de ROJO (o Naranja)
+        if (i == posCabezal) {
+            etiquetasBloques[i].setBackground(Color.RED);
+            etiquetasBloques[i].setForeground(Color.WHITE); // Texto blanco para que se vea
+        } 
+        // 2. Si el bloque está libre, BLANCO
+        else if (disco.getBlocks()[i].isFree()) {
+            etiquetasBloques[i].setBackground(Color.WHITE);
+            etiquetasBloques[i].setForeground(Color.BLACK);
+        } 
+        // 3. Si está ocupado por un archivo, CIAN
+        else {
+            etiquetasBloques[i].setBackground(Color.CYAN);
+            etiquetasBloques[i].setForeground(Color.BLACK);
+        }
+    }
     }
 }
