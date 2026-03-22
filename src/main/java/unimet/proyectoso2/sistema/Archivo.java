@@ -4,6 +4,8 @@
  */
 package unimet.proyectoso2.sistema;
 import unimet.proyectoso2.disco.DiskBlock; // Asumiendo que DiskBlock está en el paquete disco
+import unimet.proyectoso2.concurrencia.FileLock; // <--- Importar el Lock
+
 
 /**
  * Representa un archivo lógico en el sistema.
@@ -11,13 +13,17 @@ import unimet.proyectoso2.disco.DiskBlock; // Asumiendo que DiskBlock está en e
 public class Archivo extends ElementoFS {
     private int tamanoEnBloques;
     private DiskBlock bloqueInicial;
+     private final FileLock lock; 
+
 
     public Archivo(String nombre, String propietario, int tamanoEnBloques, DiskBlock bloqueInicial) {
         super(nombre, propietario);
         this.tamanoEnBloques = tamanoEnBloques;
         this.bloqueInicial = bloqueInicial;
-    }
+        this.lock = new FileLock(); // <--- Inicializar el lock
 
+    }
+    public FileLock getLock() { return lock; }
     public int getTamanoEnBloques() { return tamanoEnBloques; }
     public void setTamanoEnBloques(int tamanoEnBloques) { this.tamanoEnBloques = tamanoEnBloques; }
 
@@ -26,6 +32,6 @@ public class Archivo extends ElementoFS {
     
     @Override
     public String toString() {
-        return "Archivo[" + nombre + " | Bloques: " + tamanoEnBloques + "]";
+    return this.nombre; 
     }
 }

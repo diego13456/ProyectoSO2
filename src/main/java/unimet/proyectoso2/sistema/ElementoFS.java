@@ -27,4 +27,18 @@ public abstract class ElementoFS {
     public void setPropietario(String propietario) { this.propietario = propietario; }
     
     public LocalDateTime getFechaCreacion() { return fechaCreacion; }
+   
+    @Override
+    public String toString() {
+    return this.nombre;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+    if (obj instanceof ElementoFS) {
+        return ((ElementoFS) obj).getNombre().equals(this.nombre);
+    }
+    return false;
 }
+}
+

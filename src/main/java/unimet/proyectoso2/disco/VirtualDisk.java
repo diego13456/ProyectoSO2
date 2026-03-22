@@ -71,16 +71,16 @@ public class VirtualDisk {
      * @param head El primer bloque del archivo a liberar.
      */
     public synchronized void freeBlocks(DiskBlock head) {
-        DiskBlock current = head;
-        while (current != null) {
-            current.setFree(true);
-            DiskBlock nextToProcess = current.getNextBlock();
-            current.setNextBlock(null); // Cortamos el enlace por seguridad
-            
-            current = nextToProcess;
-            freeBlocksCount++;
-        }
+    DiskBlock current = head;
+    while (current != null) {
+        current.setFree(true); // <--- DEBE SER TRUE
+        DiskBlock nextToProcess = current.getNextBlock();
+        current.setNextBlock(null); // Limpiar el enlace
+        
+        current = nextToProcess;
+        freeBlocksCount++;
     }
+}
 
     public synchronized int getFreeBlocksCount() {
         return freeBlocksCount;
@@ -88,5 +88,9 @@ public class VirtualDisk {
 
     public int getTotalBlocks() {
         return totalBlocks;
+    }
+    
+    public DiskBlock[] getBlocks() {
+    return blocks;
     }
 }

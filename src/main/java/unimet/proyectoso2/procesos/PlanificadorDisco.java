@@ -153,4 +153,14 @@ public class PlanificadorDisco {
         }
         return ordenEjecucion;
     }
+    
+   public synchronized PCB obtenerSiguiente() {
+    if (colaProcesos.isEmpty()) return null;
+
+    // Por ahora sacamos el primero (FIFO)
+    // En la versión final, aquí puedes poner un switch para elegir entre SSTF, SCAN, etc.
+    PCB siguiente = colaProcesos.get(0);
+    colaProcesos.remove(siguiente);
+    return siguiente;
+    }
 }

@@ -42,4 +42,12 @@ public class PCB {
     public String toString() {
         return "PCB[ID:" + idProceso + " -> Track:" + bloqueObjetivo + "]";
     }
+    
+    public OperacionCRUD getOperacion() {
+    return operacion;
+    }
+
+    public Archivo getArchivoObjetivo() {
+    return archivoObjetivo;
+    }
 }

@@ -47,4 +47,11 @@ public class Directorio extends ElementoFS {
         }
         return null;
     }
+    public LinkedList<Archivo> getArchivos() {
+    return archivos;
+    }
+
+    public LinkedList<Directorio> getSubdirectorios() {
+    return subdirectorios;
+    }
 }
