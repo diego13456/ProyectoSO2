@@ -3,13 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package unimet.proyectoso2.disco;
-/**
- * Representa un bloque físico/lógico del disco virtual.
- */
 public class DiskBlock {
     private final int id;
     private boolean isFree;
-    private DiskBlock nextBlock; // Puntero para la asignación encadenada
+    private DiskBlock nextBlock;
 
     public DiskBlock(int id) {
         this.id = id;

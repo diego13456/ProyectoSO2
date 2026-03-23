@@ -5,10 +5,6 @@
 package unimet.proyectoso2.sistema;
 import java.time.LocalDateTime;
 
-/**
- * Clase abstracta base para implementar polimorfismo en el File System.
- * Representa cualquier elemento que pueda existir en el disco (Archivo o Directorio).
- */
 public abstract class ElementoFS {
     protected String nombre;
     protected String propietario;
@@ -17,7 +13,7 @@ public abstract class ElementoFS {
     public ElementoFS(String nombre, String propietario) {
         this.nombre = nombre;
         this.propietario = propietario;
-        this.fechaCreacion = LocalDateTime.now(); // java.time no es una colección, es válido.
+        this.fechaCreacion = LocalDateTime.now(); 
     }
 
     public String getNombre() { return nombre; }

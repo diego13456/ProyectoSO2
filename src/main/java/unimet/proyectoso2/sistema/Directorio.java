@@ -4,12 +4,8 @@
  */
 package unimet.proyectoso2.sistema;
 
-import unimet.proyectoso2.estructuras.LinkedList; // Nuestra lista sin java.util
+import unimet.proyectoso2.estructuras.LinkedList; 
 
-/**
- * Representa una carpeta en el sistema de archivos. 
- * Contiene listas seguras para concurrencia de sus elementos internos.
- */
 public class Directorio extends ElementoFS {
     private final LinkedList<Archivo> archivos;
     private final LinkedList<Directorio> subdirectorios;

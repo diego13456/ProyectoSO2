@@ -32,7 +32,7 @@ public class LinkedList<T> {
 
         if (head.getData().equals(element)) {
             head = head.getNext();
-            if (head == null) tail = null; // Si era el único elemento
+            if (head == null) tail = null; 
             size--;
             return true;
         }
@@ -42,7 +42,7 @@ public class LinkedList<T> {
             if (current.getNext().getData().equals(element)) {
                 current.setNext(current.getNext().getNext());
                 if (current.getNext() == null) {
-                    tail = current; // Actualizamos el tail si borramos el último
+                    tail = current; 
                 }
                 size--;
                 return true;
@@ -69,5 +69,17 @@ public class LinkedList<T> {
 
     public synchronized boolean isEmpty() {
         return size == 0;
+    }
+    
+    public synchronized void repairList() {
+        Nodo<T> current = head;
+        int count = 0;
+        tail = null;
+        while (current != null) {
+            tail = current;
+            count++;
+            current = current.getNext();
+        }
+        size = count;
     }
 }

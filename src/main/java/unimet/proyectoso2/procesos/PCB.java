@@ -6,15 +6,12 @@ package unimet.proyectoso2.procesos;
 
 import unimet.proyectoso2.sistema.Archivo;
 
-/**
- * Process Control Block. Mantiene el contexto del proceso de I/O.
- */
 public class PCB {
     private final int idProceso;
     private EstadoProceso estado;
     private OperacionCRUD operacion;
     private Archivo archivoObjetivo;
-    private int bloqueObjetivo; // Pista/Bloque al que debe moverse el cabezal
+    private int bloqueObjetivo; 
 
     public PCB(int idProceso, OperacionCRUD operacion, Archivo archivoObjetivo, int bloqueObjetivo) {
         this.idProceso = idProceso;
@@ -29,7 +26,6 @@ public class PCB {
     public EstadoProceso getEstado() { return estado; }
     public void setEstado(EstadoProceso estado) { this.estado = estado; }
     
-    // Sobrescribimos equals para que el método remove() de CustomLinkedList funcione correctamente
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;

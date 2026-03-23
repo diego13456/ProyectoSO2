@@ -29,7 +29,7 @@ public class Queue<T> {
 
     public synchronized T dequeue() {
         if (isEmpty()) {
-            return null; // Omitimos lanzar excepciones de java.util
+            return null;
         }
         T data = head.getData();
         head = head.getNext();
