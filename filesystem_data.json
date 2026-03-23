@@ -1,0 +1,447 @@
+{
+  "archivos": {
+    "head": {
+      "data": {
+        "tamanoEnBloques": 1,
+        "bloqueInicial": {
+          "id": 34,
+          "isFree": false
+        },
+        "nombre": "readme.txt",
+        "propietario": "Admin",
+        "fechaCreacion": "2026-03-23T13:56:28.249662500"
+      },
+      "next": {
+        "data": {
+          "tamanoEnBloques": 28,
+          "bloqueInicial": {
+            "id": 131,
+            "isFree": false,
+            "nextBlock": {
+              "id": 132,
+              "isFree": false,
+              "nextBlock": {
+                "id": 133,
+                "isFree": false,
+                "nextBlock": {
+                  "id": 134,
+                  "isFree": false,
+                  "nextBlock": {
+                    "id": 135,
+                    "isFree": false,
+                    "nextBlock": {
+                      "id": 136,
+                      "isFree": false,
+                      "nextBlock": {
+                        "id": 137,
+                        "isFree": false,
+                        "nextBlock": {
+                          "id": 138,
+                          "isFree": false,
+                          "nextBlock": {
+                            "id": 139,
+                            "isFree": false,
+                            "nextBlock": {
+                              "id": 140,
+                              "isFree": false,
+                              "nextBlock": {
+                                "id": 141,
+                                "isFree": false,
+                                "nextBlock": {
+                                  "id": 142,
+                                  "isFree": false,
+                                  "nextBlock": {
+                                    "id": 143,
+                                    "isFree": false,
+                                    "nextBlock": {
+                                      "id": 144,
+                                      "isFree": false,
+                                      "nextBlock": {
+                                        "id": 145,
+                                        "isFree": false,
+                                        "nextBlock": {
+                                          "id": 146,
+                                          "isFree": false,
+                                          "nextBlock": {
+                                            "id": 147,
+                                            "isFree": false,
+                                            "nextBlock": {
+                                              "id": 148,
+                                              "isFree": false,
+                                              "nextBlock": {
+                                                "id": 149,
+                                                "isFree": false,
+                                                "nextBlock": {
+                                                  "id": 150,
+                                                  "isFree": false,
+                                                  "nextBlock": {
+                                                    "id": 151,
+                                                    "isFree": false,
+                                                    "nextBlock": {
+                                                      "id": 152,
+                                                      "isFree": false,
+                                                      "nextBlock": {
+                                                        "id": 153,
+                                                        "isFree": false,
+                                                        "nextBlock": {
+                                                          "id": 154,
+                                                          "isFree": false,
+                                                          "nextBlock": {
+                                                            "id": 155,
+                                                            "isFree": false,
+                                                            "nextBlock": {
+                                                              "id": 156,
+                                                              "isFree": false,
+                                                              "nextBlock": {
+                                                                "id": 157,
+                                                                "isFree": false,
+                                                                "nextBlock": {
+                                                                  "id": 158,
+                                                                  "isFree": false
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "nombre": "data_log.csv",
+          "propietario": "Admin",
+          "fechaCreacion": "2026-03-23T13:56:28.249662500"
+        },
+        "next": {
+          "data": {
+            "tamanoEnBloques": 52,
+            "bloqueInicial": {
+              "id": 180,
+              "isFree": false,
+              "nextBlock": {
+                "id": 181,
+                "isFree": false,
+                "nextBlock": {
+                  "id": 182,
+                  "isFree": false,
+                  "nextBlock": {
+                    "id": 183,
+                    "isFree": false,
+                    "nextBlock": {
+                      "id": 184,
+                      "isFree": false,
+                      "nextBlock": {
+                        "id": 185,
+                        "isFree": false,
+                        "nextBlock": {
+                          "id": 186,
+                          "isFree": false,
+                          "nextBlock": {
+                            "id": 187,
+                            "isFree": false,
+                            "nextBlock": {
+                              "id": 188,
+                              "isFree": false,
+                              "nextBlock": {
+                                "id": 189,
+                                "isFree": false,
+                                "nextBlock": {
+                                  "id": 190,
+                                  "isFree": false,
+                                  "nextBlock": {
+                                    "id": 191,
+                                    "isFree": false,
+                                    "nextBlock": {
+                                      "id": 192,
+                                      "isFree": false,
+                                      "nextBlock": {
+                                        "id": 193,
+                                        "isFree": false,
+                                        "nextBlock": {
+                                          "id": 194,
+                                          "isFree": false,
+                                          "nextBlock": {
+                                            "id": 195,
+                                            "isFree": false,
+                                            "nextBlock": {
+                                              "id": 196,
+                                              "isFree": false,
+                                              "nextBlock": {
+                                                "id": 197,
+                                                "isFree": false,
+                                                "nextBlock": {
+                                                  "id": 198,
+                                                  "isFree": false,
+                                                  "nextBlock": {
+                                                    "id": 199,
+                                                    "isFree": false,
+                                                    "nextBlock": {
+                                                      "id": 200,
+                                                      "isFree": false,
+                                                      "nextBlock": {
+                                                        "id": 201,
+                                                        "isFree": false,
+                                                        "nextBlock": {
+                                                          "id": 202,
+                                                          "isFree": false,
+                                                          "nextBlock": {
+                                                            "id": 203,
+                                                            "isFree": false,
+                                                            "nextBlock": {
+                                                              "id": 204,
+                                                              "isFree": false,
+                                                              "nextBlock": {
+                                                                "id": 205,
+                                                                "isFree": false,
+                                                                "nextBlock": {
+                                                                  "id": 206,
+                                                                  "isFree": false,
+                                                                  "nextBlock": {
+                                                                    "id": 207,
+                                                                    "isFree": false,
+                                                                    "nextBlock": {
+                                                                      "id": 208,
+                                                                      "isFree": false,
+                                                                      "nextBlock": {
+                                                                        "id": 209,
+                                                                        "isFree": false,
+                                                                        "nextBlock": {
+                                                                          "id": 210,
+                                                                          "isFree": false,
+                                                                          "nextBlock": {
+                                                                            "id": 211,
+                                                                            "isFree": false,
+                                                                            "nextBlock": {
+                                                                              "id": 212,
+                                                                              "isFree": false,
+                                                                              "nextBlock": {
+                                                                                "id": 213,
+                                                                                "isFree": false,
+                                                                                "nextBlock": {
+                                                                                  "id": 214,
+                                                                                  "isFree": false,
+                                                                                  "nextBlock": {
+                                                                                    "id": 215,
+                                                                                    "isFree": false,
+                                                                                    "nextBlock": {
+                                                                                      "id": 216,
+                                                                                      "isFree": false,
+                                                                                      "nextBlock": {
+                                                                                        "id": 217,
+                                                                                        "isFree": false,
+                                                                                        "nextBlock": {
+                                                                                          "id": 218,
+                                                                                          "isFree": false,
+                                                                                          "nextBlock": {
+                                                                                            "id": 219,
+                                                                                            "isFree": false,
+                                                                                            "nextBlock": {
+                                                                                              "id": 220,
+                                                                                              "isFree": false,
+                                                                                              "nextBlock": {
+                                                                                                "id": 221,
+                                                                                                "isFree": false,
+                                                                                                "nextBlock": {
+                                                                                                  "id": 222,
+                                                                                                  "isFree": false,
+                                                                                                  "nextBlock": {
+                                                                                                    "id": 223,
+                                                                                                    "isFree": false,
+                                                                                                    "nextBlock": {
+                                                                                                      "id": 224,
+                                                                                                      "isFree": false,
+                                                                                                      "nextBlock": {
+                                                                                                        "id": 225,
+                                                                                                        "isFree": false,
+                                                                                                        "nextBlock": {
+                                                                                                          "id": 226,
+                                                                                                          "isFree": false,
+                                                                                                          "nextBlock": {
+                                                                                                            "id": 227,
+                                                                                                            "isFree": false,
+                                                                                                            "nextBlock": {
+                                                                                                              "id": 228,
+                                                                                                              "isFree": false,
+                                                                                                              "nextBlock": {
+                                                                                                                "id": 229,
+                                                                                                                "isFree": false,
+                                                                                                                "nextBlock": {
+                                                                                                                  "id": 230,
+                                                                                                                  "isFree": false,
+                                                                                                                  "nextBlock": {
+                                                                                                                    "id": 231,
+                                                                                                                    "isFree": false
+                                                                                                                  }
+                                                                                                                }
+                                                                                                              }
+                                                                                                            }
+                                                                                                          }
+                                                                                                        }
+                                                                                                      }
+                                                                                                    }
+                                                                                                  }
+                                                                                                }
+                                                                                              }
+                                                                                            }
+                                                                                          }
+                                                                                        }
+                                                                                      }
+                                                                                    }
+                                                                                  }
+                                                                                }
+                                                                              }
+                                                                            }
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "nombre": "video_clip.mp4",
+            "propietario": "Admin",
+            "fechaCreacion": "2026-03-23T13:56:28.249662500"
+          },
+          "next": {
+            "data": {
+              "tamanoEnBloques": 9,
+              "bloqueInicial": {
+                "id": 0,
+                "isFree": false,
+                "nextBlock": {
+                  "id": 1,
+                  "isFree": false,
+                  "nextBlock": {
+                    "id": 2,
+                    "isFree": false,
+                    "nextBlock": {
+                      "id": 3,
+                      "isFree": false,
+                      "nextBlock": {
+                        "id": 4,
+                        "isFree": false,
+                        "nextBlock": {
+                          "id": 5,
+                          "isFree": false,
+                          "nextBlock": {
+                            "id": 6,
+                            "isFree": false,
+                            "nextBlock": {
+                              "id": 7,
+                              "isFree": false,
+                              "nextBlock": {
+                                "id": 8,
+                                "isFree": false
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "nombre": "kk",
+              "propietario": "Admin",
+              "fechaCreacion": "2026-03-23T14:12:20.868927700"
+            }
+          }
+        }
+      }
+    },
+    "tail": {
+      "data": {
+        "tamanoEnBloques": 9,
+        "bloqueInicial": {
+          "id": 0,
+          "isFree": false,
+          "nextBlock": {
+            "id": 1,
+            "isFree": false,
+            "nextBlock": {
+              "id": 2,
+              "isFree": false,
+              "nextBlock": {
+                "id": 3,
+                "isFree": false,
+                "nextBlock": {
+                  "id": 4,
+                  "isFree": false,
+                  "nextBlock": {
+                    "id": 5,
+                    "isFree": false,
+                    "nextBlock": {
+                      "id": 6,
+                      "isFree": false,
+                      "nextBlock": {
+                        "id": 7,
+                        "isFree": false,
+                        "nextBlock": {
+                          "id": 8,
+                          "isFree": false
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "nombre": "kk",
+        "propietario": "Admin",
+        "fechaCreacion": "2026-03-23T14:12:20.868927700"
+      }
+    },
+    "size": 4
+  },
+  "subdirectorios": {
+    "size": 0
+  },
+  "nombre": "/",
+  "propietario": "Admin",
+  "fechaCreacion": "2026-03-23T13:54:53.593084300"
+}

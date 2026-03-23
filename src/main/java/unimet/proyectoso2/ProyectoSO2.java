@@ -4,6 +4,9 @@
 
 package unimet.proyectoso2;
 
+import javax.swing.UIManager;
+import unimet.proyectoso2.gui.MainFrame;
+
 /**
  *
  * @author diego
@@ -11,6 +14,15 @@ package unimet.proyectoso2;
 public class ProyectoSO2 {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        try { 
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); 
+        } catch (Exception e) {
+            System.err.println("No se pudo aplicar el LookAndFeel del sistema.");
+        }
+        
+        java.awt.EventQueue.invokeLater(() -> {
+            MainFrame ventanaPrincipal = new MainFrame();
+            ventanaPrincipal.setVisible(true);
+        });
     }
 }
